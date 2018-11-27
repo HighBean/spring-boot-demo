@@ -57,7 +57,7 @@
     </logger>
 
     <root>
-        <level value="DEBUG"/>
+        <level value="INFO"/>
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="info2File"/>
         <appender-ref ref="error2File"/>

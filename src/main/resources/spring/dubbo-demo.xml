@@ -9,24 +9,26 @@
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <!-- provider's application name, used for tracing dependency relationship -->
     <dubbo:application name="demo"/>
-
     <!-- use multicast registry center to export service -->
     <dubbo:registry protocol="zookeeper" client="zkclient" address="zookeeper://127.0.0.1:2181"/>
 
     <!-- use dubbo protocol to export service on port 20880 -->
     <dubbo:protocol name="dubbo" port="20881"/>
 
+    <dubbo:consumer filter="trade,ip" listener="listenerA"/>
+
     <!--&lt;!&ndash; service implementation, as same as regular local bean &ndash;&gt;-->
     <bean id="personService" class="com.boomboo.demo.service.PersonServiceImpl"/>
 
     <!-- declare the service interface to be exported -->
-    <dubbo:service interface="com.boomboo.demo.service.PersonService" ref="personService" protocol="dubbo" timeout="1000"/>
+    <dubbo:service interface="com.boomboo.demo.service.PersonService" ref="personService" protocol="dubbo"
+                   timeout="1000"/>
 
     <dubbo:service interface="com.boomboo.demo.service.wrapper.AService" ref="aService1" timeout="1000"/>
 
     <!--local service-->
     <dubbo:reference id="aService" interface="com.boomboo.demo.service.wrapper.AService"/>
 
-    <dubbo:reference id="personService1" check="false" timeout="1000" mock="true" protocol="dubbo"
-                     interface="com.boomboo.demo.service.PersonService"/>
+    <dubbo:reference id="personService1" check="false" timeout="500" mock="true" protocol="dubbo"
+                     interface="com.boomboo.demo.service.PersonService" retries="0"/>
 </beans>

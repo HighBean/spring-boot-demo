@@ -6,9 +6,12 @@ import com.boomboo.demo.service.AsynRequestService;
 import com.boomboo.demo.service.PersonService;
 import com.boomboo.demo.vo.PersonVO;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author dapeng
@@ -26,6 +29,7 @@ public class PersonController {
 
     @RequestMapping(value = "/{version:.+}/{id}", method = RequestMethod.GET)
     public PersonVO getPerson(@PathVariable Long id, @PathVariable String version) {
+//        Assert.assertEquals("version不正确", version, 2);
         PersonDTO personDTO = personService.getPersonById(id);
         return assemblePersonVO(personDTO);
     }

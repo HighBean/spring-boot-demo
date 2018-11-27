@@ -11,9 +11,9 @@ public class OffHeapMemoryTest {
 
     /**
      * 该类主要是在通信过程中作为缓冲池，例如netty、mina（NIO）
-     * directMemore default:64M
+     * directMemory default:64M
      * <p>
-     * 对于频繁使用的IO内存，存在时间短，推荐使用堆外内存从
+     * 对于频繁使用的IO内存，存在时间短，推荐使用堆外内存
      * 不能使用大量堆外内存，需要控制gc，可以通过反射进行System.gc，有可能造成OOM
      * 非线程安全，对write操作 syn一下
      * <p>

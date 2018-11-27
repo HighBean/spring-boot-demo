@@ -41,7 +41,7 @@ public class ElasticSearchService {
             String requestUrl = new StringBuilder().append("/").append(index)
                     .append("/").append("type").append("/").append(bussinessCode).toString();
             HttpEntity entity = new NStringEntity(data.toJSONString(), ContentType.APPLICATION_JSON);
-            Response resp = client.performRequest("POST", requestUrl, Collections.EMPTY_MAP, entity, new BasicHeader("a", "b"));
+//            Response resp = client.performRequest("POST", requestUrl, Collections.EMPTY_MAP, entity, new BasicHeader("a", "b"));
         } catch (Exception ex) {
             log.error("esService postData error", ex);
         }

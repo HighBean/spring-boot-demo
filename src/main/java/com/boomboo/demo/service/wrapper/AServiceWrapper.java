@@ -15,16 +15,16 @@ public class AServiceWrapper implements AService, ApplicationContextAware {
 
     private ApplicationContext context;
 
-    private List<AbstractAService> AServiceImpls;
+    private List<AbstractAService> aServiceImpls;
 
     private AbstractAService service;
 
     @Override
     public void doA(String str) {
-        if (AServiceImpls == null) {
+        if (aServiceImpls == null) {
             init();
         }
-        for (AbstractAService wrapper : AServiceImpls) {
+        for (AbstractAService wrapper : aServiceImpls) {
             if (wrapper.support(str)) {
                 this.service = wrapper;
                 break;
@@ -34,9 +34,13 @@ public class AServiceWrapper implements AService, ApplicationContextAware {
     }
 
     public void init() {
-        Map<String, AbstractAService> matchingBeans =
-                BeanFactoryUtils.beansOfTypeIncludingAncestors(context, AbstractAService.class, true, false);
-        AServiceImpls = new ArrayList<>(matchingBeans.values());
+        synchronized (AbstractAService.class) {
+            if (aServiceImpls == null) {
+                Map<String, AbstractAService> matchingBeans =
+                        BeanFactoryUtils.beansOfTypeIncludingAncestors(context, AbstractAService.class, true, false);
+                aServiceImpls = new ArrayList<>(matchingBeans.values());
+            }
+        }
     }
 
     @Override
